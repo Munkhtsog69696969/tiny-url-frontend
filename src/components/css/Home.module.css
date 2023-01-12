@@ -1,0 +1,36 @@
+
+.homeContainer{
+    width: 100vw;
+    height: 100vh;
+}
+
+.home{
+    margin: 3%;
+    /* border: 1px solid green; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+.form1{
+    margin: 8%;
+    display: flex;
+}
+
+.input1{
+    padding: 5px;
+    border: 1px solid rgb(197, 197, 197);
+    border-radius: 15px;
+    box-shadow: 1.5px 1.5px 0px 0px rgb(202, 200, 200);
+    width: 500px;
+}
+
+.top{
+    position: absolute;   
+    top:0;
+    right: 0;
+    gap: 20px;
+}
