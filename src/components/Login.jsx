@@ -1,11 +1,39 @@
 import styles from "./css/LoginAndSignup.module.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
+import React, { useState,useRef,useEffect } from "react"
 
 const baseUrl="http://localhost:8000";
 
 
 export const Login=()=>{
+    const navigate=useNavigate();
+    const email=useRef();
+    const password=useRef();
+    const [resData,setResData]=useState();
+
+    async function Login(){
+        const emailInput=email.current.value;
+        const passwordInput=password.current.value;
+
+        await axios.post(baseUrl+"/login",{email:emailInput , password:passwordInput})
+          .then(async(res)=>{
+            console.log(res);
+            setResData(res.data[0]._id);
+          }).catch((err)=>{
+            console.log(err)
+          })
+    }
+
+    if(resData!=="Email doesnt exist."){
+        if(resData!=="Email or password incorrect."){
+            if(resData!==""){
+                localStorage.setItem("userId",resData);
+                navigate("/home");
+            }
+        }
+    }
+
     return(
         <div className={styles.container}>
             <div className={styles.container1}>
@@ -33,12 +61,12 @@ export const Login=()=>{
 
                 <div>
                     <p>Email:</p>
-                    <input placeholder="Email"/>
+                    <input ref={email} placeholder="Email"/>
                 </div>
 
                 <div>
                     <p>Password:</p>
-                    <input placeholder="Password"/>
+                    <input ref={password} placeholder="Password"/>
                 </div>
 
                 <div className={styles.form}>
@@ -49,7 +77,7 @@ export const Login=()=>{
                 </div>
 
                 <div className={styles.form}>
-                    <button>Login</button>
+                    <button onClick={Login}>Login</button>
                 </div>
 
                 <div className={styles.form}>
