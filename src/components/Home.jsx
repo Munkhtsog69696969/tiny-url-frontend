@@ -11,34 +11,37 @@ export const Home=()=>{
     const [user,setUser]=useState();
     const originalUrl=useRef();
     const [shortUrl, setShortUrl]=useState();
-    const [history,setHistory]=useState();
 
 
-    axios.get(baseUrl+"/getUser/"+userId)
+    if(userId!=null){
+        axios.get(baseUrl+"/getUser/"+userId)
         .then(async(res)=>{
+            console.log(res);
             setUser(res.data.email);
         }).catch(async(err)=>{
             console.log(err);
         });
-
-    // axios.get(baseUrl+"/history")
-    //     .then(async(res)=>{      
-    //         console.log(res)
-    //     }).catch((err)=>{
-    //         console.log(err)
-    //     })   
+    }
 
     async function Shorten(){
-        await axios.post(baseUrl+"/createUrl" , {longUrl:originalUrl.current.value})
-          .then(async(res)=>{
-            console.log(res.data.shortUrl)
-            setShortUrl(res.data.shortUrl);
-          })
+        if(userId!=""){
+            await axios.post(baseUrl+"/createUrl" , {longUrl:originalUrl.current.value})
+            .then(async(res)=>{
+              console.log(res.data.shortUrl)
+              setShortUrl(res.data.shortUrl);
+            })
+        }
     }
 
     async function redirect(){
         window.location=originalUrl.current.value;
     }
+
+    function Logout(){
+        localStorage.setItem("userId" , null);
+        navigate("/login");
+    }
+
     return(
         <div className={styles.homeContainer}>
             <div className={styles.home}>
@@ -50,6 +53,8 @@ export const Home=()=>{
                     </svg>
 
                     <button style={{marginLeft:"30px"}}>{user && user}</button>
+
+                    <button onClick={Logout} style={{marginLeft:"30px",backgroundColor:"red"}}>Log out</button>
                 </div>
                 
                 <div className={styles.logo1}>

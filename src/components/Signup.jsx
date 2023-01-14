@@ -4,6 +4,7 @@ import { useRef } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+// import jwt from "jsonwebtoken"
 
 const baseUrl="http://localhost:8000";
 
@@ -35,6 +36,16 @@ export const Signup=()=>{
                 }
             })
         }
+
+        // const accessToken=jwt.sign(
+        //     {name:"ruby" , id:"dps"},
+        //     process.env.ACCESS_TOKEN_SECRET || "defaultSecret",
+        //     {expiresIn:"1d"}
+        // )
+
+        // console.log(accessToken);
+
+
     }
 
     return(
