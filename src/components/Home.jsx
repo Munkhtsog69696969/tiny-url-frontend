@@ -11,15 +11,22 @@ export const Home=()=>{
     const [user,setUser]=useState();
     const originalUrl=useRef();
     const [shortUrl, setShortUrl]=useState();
+    const [history,setHistory]=useState();
 
 
     axios.get(baseUrl+"/getUser/"+userId)
         .then(async(res)=>{
-            console.log(res);
             setUser(res.data.email);
         }).catch(async(err)=>{
             console.log(err);
         });
+
+    // axios.get(baseUrl+"/history")
+    //     .then(async(res)=>{      
+    //         console.log(res)
+    //     }).catch((err)=>{
+    //         console.log(err)
+    //     })   
 
     async function Shorten(){
         await axios.post(baseUrl+"/createUrl" , {longUrl:originalUrl.current.value})
