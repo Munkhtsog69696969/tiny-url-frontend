@@ -37,14 +37,6 @@ export const Signup=()=>{
             })
         }
 
-        // const accessToken=jwt.sign(
-        //     {name:"ruby" , id:"dps"},
-        //     process.env.ACCESS_TOKEN_SECRET || "defaultSecret",
-        //     {expiresIn:"1d"}
-        // )
-
-        // console.log(accessToken);
-
 
     }
 

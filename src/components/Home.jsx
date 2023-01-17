@@ -2,6 +2,7 @@ import styles from "./css/Home.module.css"
 import axios from "axios"
 import { useState,useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const baseUrl="http://localhost:8000";
 
@@ -11,6 +12,16 @@ export const Home=()=>{
     const [user,setUser]=useState();
     const originalUrl=useRef();
     const [shortUrl, setShortUrl]=useState();
+    const [history,setHistory]=useState();
+
+    useEffect(()=>{
+        axios.put(baseUrl+"/history")
+            .then(async(res)=>{
+                setHistory(res.data);
+            }).catch((err)=>{
+                console.log(err);
+            })
+    },[Shorten])
 
 
     if(userId!=null){
@@ -18,7 +29,7 @@ export const Home=()=>{
         .then(async(res)=>{
             console.log(res);
             setUser(res.data.email);
-        }).catch(async(err)=>{
+        }).catch((err)=>{
             console.log(err);
         });
     }
@@ -41,6 +52,8 @@ export const Home=()=>{
         localStorage.setItem("userId" , null);
         navigate("/login");
     }
+
+    console.log(history)
 
     return(
         <div className={styles.homeContainer}>
@@ -71,6 +84,19 @@ export const Home=()=>{
                 <div className={styles.form1}>
                     <input ref={originalUrl} className={styles.input1} placeholder="https://www.web-huudas.mn"/>
                     <button onClick={Shorten}>Shorten Url</button>
+                </div>
+
+                <div style={{overflowY:"scroll" , height:"40%"}}>
+                    {
+                        history && history.map((item,i)=>{
+                            return(
+                                <div style={{ border:"1px solid red" , padding:"10px"}}>
+                                    <p>{item.longUrl}</p>
+                                    <p>{item.shortUrl}</p>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
 
                 <a onClick={redirect} style={{textDecoration:"underline"}}>{shortUrl}</a>

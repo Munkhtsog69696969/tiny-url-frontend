@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
 import React, { useState,useRef,useEffect } from "react"
 
-
 const baseUrl="http://localhost:8000";
 
 
@@ -11,7 +10,7 @@ export const Login=()=>{
     const navigate=useNavigate();
     const email=useRef();
     const password=useRef();
-    const [resData,setResData]=useState();
+    const [resData,setResData]=useState("");
 
     async function Login(){
         const emailInput=email.current.value;
@@ -20,7 +19,7 @@ export const Login=()=>{
         await axios.post(baseUrl+"/login",{email:emailInput , password:passwordInput})
           .then(async(res)=>{
             console.log(res);
-            setResData(res.data[0]._id);
+            // setResData(res.data);
           }).catch((err)=>{
             console.log(err)
           })
@@ -29,8 +28,9 @@ export const Login=()=>{
     if(resData!=="Email doesnt exist."){
         if(resData!=="Email or password incorrect."){
             if(resData!==""){
-                localStorage.setItem("userId",resData);
-                navigate("/home");
+                // localStorage.setItem("userId",resData);
+                console.log(resData);
+                // navigate("/home");
             }
         }
     }
