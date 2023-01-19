@@ -4,8 +4,9 @@ import { useState,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
+import { client } from "./client";
 
-const baseUrl="http://localhost:8000";
+// const baseUrl="http://localhost:8000";
 
 export const Home=()=>{
     const navigate=useNavigate();
@@ -17,10 +18,11 @@ export const Home=()=>{
     const decodedToken=jwt_decode(token);
     const userId=decodedToken.id;
 
-    // console.log(decodedToken.id)
+    console.log(token)
+    console.log(decodedToken)
 
     async function Shorten(){
-        await axios.post(baseUrl+"/createUrl" , {longUrl:originalUrl.current.value , userId:userId})
+        await client.post("/createUrl" , {longUrl:originalUrl.current.value , userId:userId})
           .then(async(res)=>{
             console.log(res.data.shortUrl)
             setShortUrl(res.data.shortUrl);
@@ -37,7 +39,7 @@ export const Home=()=>{
     }
 
     useEffect(()=>{
-        axios.put(baseUrl+"/history")
+        client.put("/history")
             .then(async(res)=>{
                 setHistory(res.data);
             }).catch((err)=>{
@@ -97,6 +99,7 @@ export const Home=()=>{
                             )
                         })
                     }
+                    
                 </div>
 
             </div>

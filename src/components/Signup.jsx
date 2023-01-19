@@ -4,8 +4,9 @@ import { useRef } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { client } from "./client";
 
-const baseUrl="http://localhost:8000";
+// const baseUrl="http://localhost:8000";
 
 export const Signup=()=>{
     const navigate=useNavigate();
@@ -22,7 +23,7 @@ export const Signup=()=>{
         if(confirmPasswordInput!==passwordInput){
             setErrorMessage("Passwords do not match.")
         }else{
-            await axios.post(baseUrl+"/signin",{email:emailInput , password:passwordInput})
+            await client.post("/signin",{email:emailInput , password:passwordInput})
             .then(async(res)=>{
                 // console.log(res.data);
                 if(res.data==='Invalid email address. Please try again.' || res.data==='Password must be longer than 6 characters.' || res.data==="Email exists."){

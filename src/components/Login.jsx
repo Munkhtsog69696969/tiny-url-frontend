@@ -2,8 +2,9 @@ import styles from "./css/LoginAndSignup.module.css"
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
 import React, { useState,useRef,useEffect } from "react"
+import { client } from "./client";
 
-const baseUrl="http://localhost:8000";
+// const baseUrl="http://localhost:8000";
 
 
 export const Login=()=>{
@@ -17,7 +18,7 @@ export const Login=()=>{
         const emailInput=email.current.value;
         const passwordInput=password.current.value;
 
-        await axios.post(baseUrl+"/login",{email:emailInput , password:passwordInput})
+        await client.post("/login",{email:emailInput , password:passwordInput})
           .then(async(res)=>{
             // console.log(res.data);
             if(res.data!=="Email or password incorrect." && res.data!=="Email doesnt exist."){
