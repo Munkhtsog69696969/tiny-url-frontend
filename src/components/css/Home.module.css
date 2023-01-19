@@ -2,7 +2,6 @@
 .homeContainer{
     width: 100vw;
     height: 100vh;
-    overflow: scroll;
 }
 
 .home{
@@ -17,7 +16,7 @@
 }
 
 .form1{
-    margin: 8%;
+    margin: 2%;
     display: flex;
 }
 
@@ -35,3 +34,35 @@
     right: 0;
     gap: 20px;
 }
+
+.urlContainer{
+    border: 5px solid rgb(143, 143, 143);
+    border-radius: 15px;
+    width: 80%;
+    overflow-y: scroll;
+    height: 40%;
+}
+
+.url{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.longUrlText{
+    /* border: 1px solid red; */
+    font-size: 18px;
+}
+
+.shortUrlText{
+    /* border: 1px solid red; */
+    font-size: 18px;
+    color: blue;
+    text-decoration: underline;
+}
+
+.urlBigText{
+    /* border: 1px solid red; */
+    font-size: 20px;
+    font-weight: bold;
+}
+

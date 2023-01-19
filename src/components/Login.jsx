@@ -10,7 +10,8 @@ export const Login=()=>{
     const navigate=useNavigate();
     const email=useRef();
     const password=useRef();
-    const [resData,setResData]=useState("");
+    const [warning,setWarning]=useState();
+    const [navToHome,setNavToHome]=useState();
 
     async function Login(){
         const emailInput=email.current.value;
@@ -18,22 +19,24 @@ export const Login=()=>{
 
         await axios.post(baseUrl+"/login",{email:emailInput , password:passwordInput})
           .then(async(res)=>{
-            console.log(res);
-            // setResData(res.data);
+            // console.log(res.data);
+            if(res.data!=="Email or password incorrect." && res.data!=="Email doesnt exist."){
+                setNavToHome(res.data);
+            }else{
+                setWarning(res.data);
+            }
           }).catch((err)=>{
             console.log(err)
           })
     }
 
-    if(resData!=="Email doesnt exist."){
-        if(resData!=="Email or password incorrect."){
-            if(resData!==""){
-                // localStorage.setItem("userId",resData);
-                console.log(resData);
-                // navigate("/home");
-            }
+    useEffect(()=>{
+        if(navToHome){
+            // console.log("res chnged")
+            localStorage.setItem("token",navToHome);
+            navigate("/home");
         }
-    }
+    },[navToHome]);
 
     return(
         <div className={styles.container}>
@@ -69,6 +72,8 @@ export const Login=()=>{
                     <p>Password:</p>
                     <input ref={password} placeholder="Password"/>
                 </div>
+
+                <p style={{margin:"10px" , color:"red"}}>{warning}</p>
 
                 <div className={styles.form}>
                     <input type="checkbox"/>
